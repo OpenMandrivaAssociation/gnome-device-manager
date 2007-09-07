@@ -15,9 +15,13 @@ Source0: %{name}-%{version}.tar.bz2
 # (fc) 0.2-0.20070906.1mdv fix error in Makefile.am
 Patch0: gnome-device-manager-0.2-fixbuild.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
-BuildRequires: hal-devel >= 0.5.5 gtk2-devel >= 2.8.0 dbus-devel >= 0.62
+BuildRequires: hal-devel >= 0.5.5 
 BuildRequires: gettext
 BuildRequires: scrollkeeper
+BuildRequires: gnome-doc-utils
+BuildRequires: gnome-common
+BuildRequires: libgnomeui2-devel
+BuildRequires: intltool
 Requires: hal >= 0.5.7
 Requires: dbus >= 0.62
 Requires: dbus-glib >= 0.62
