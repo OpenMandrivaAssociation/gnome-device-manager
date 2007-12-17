@@ -14,7 +14,6 @@ Group: Graphical desktop/GNOME
 Source0: %{name}-%{version}.tar.bz2
 # (fc) 0.2-0.20070906.1mdv fix error in Makefile.am
 Patch0: gnome-device-manager-0.2-fixbuild.patch
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: hal-devel >= 0.5.5 
 BuildRequires: gettext
 BuildRequires: scrollkeeper
