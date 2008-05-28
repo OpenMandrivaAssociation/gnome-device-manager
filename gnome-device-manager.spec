@@ -7,13 +7,17 @@
 Summary: Device manager for the GNOME desktop
 Name: gnome-device-manager
 Version: 0.2
-Release: %mkrel 0.%{alphatag}.1
+Release: %mkrel 0.%{alphatag}.2
 License: GPL
 URL: http://
 Group: Graphical desktop/GNOME
 Source0: %{name}-%{version}.tar.bz2
 # (fc) 0.2-0.20070906.1mdv fix error in Makefile.am
 Patch0: gnome-device-manager-0.2-fixbuild.patch
+# (fc) 0.2-0.20070906.2mdv fix underlinking
+Patch1: gnome-device-manager-0.2-fixunderlinking.patch
+# (fc) 0.2-0.20070906.2mdv improve theming notes / warnings (Fedora)
+Patch2: note-theming.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: hal-devel >= 0.5.5 
 BuildRequires: gettext
@@ -53,8 +57,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %setup -q
 %patch0 -p1 -b .fixbuild
+%patch1 -p1 -b .fixunderlinking
+%patch2 -p1 -b .note-theming
 
-#needed by patch0
+#needed by patches 0 & 1
 autoreconf
 
 %build
