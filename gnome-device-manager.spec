@@ -7,7 +7,7 @@
 Summary: Device manager for the GNOME desktop
 Name: gnome-device-manager
 Version: 0.2
-Release: %mkrel 0.%{alphatag}.2
+Release: %mkrel 3.%{alphatag}.2
 License: GPL
 URL: http://
 Group: Graphical desktop/GNOME
