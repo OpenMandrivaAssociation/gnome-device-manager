@@ -64,6 +64,7 @@ rm -rf $RPM_BUILD_ROOT
 autoreconf
 
 %build
+%define _enable_libtoolize 1
 %configure2_5x --disable-scrollkeeper
 make
 
