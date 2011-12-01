@@ -53,7 +53,7 @@ Provides: %{name}-devel = %{version}-%{release}
 Headers and static libraries for gnome-device-manager.
 
 %prep
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %setup -q
 %patch0 -p1 -b .fixbuild
@@ -69,15 +69,15 @@ autoreconf
 make
 
 %install
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 %makeinstall_std
 
-rm -f $RPM_BUILD_ROOT%{_libdir}/*.a
+rm -f %{buildroot}%{_libdir}/*.a
 
 %find_lang %name --with-gnome
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %post
 %update_scrollkeeper
