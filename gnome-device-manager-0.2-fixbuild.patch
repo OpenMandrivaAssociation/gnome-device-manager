@@ -1,0 +1,16 @@
+--- gnome-device-manager-0.2/data/Makefile.am.fixbuild	2007-09-06 15:03:14.000000000 +0200
++++ gnome-device-manager-0.2/data/Makefile.am	2007-09-06 15:03:24.000000000 +0200
+@@ -13,11 +13,11 @@ pkgconfig_DATA = $(pkgconfig_in_files:.p
+ distuninstallcheck_listfiles = find . -type f -print | grep -v scrollkeeper
+ 
+ EXTRA_DIST = 			\
+-	$(desktop_in_files)	
++	$(desktop_in_files)	\
+ 	$(pkgconfig_in_files)
+ 
+ CLEANFILES = \
+-	$(desktop_DATA)
++	$(desktop_DATA)		\
+ 	$(pkgconfig_DATA)
+ 
+ clean-local :

@@ -1,0 +1,73 @@
+diff -up gnome-device-manager-0.2/shell/gdm-main.c.style gnome-device-manager-0.2/shell/gdm-main.c
+--- gnome-device-manager-0.2/shell/gdm-main.c.style	2007-10-25 18:25:22.000000000 -0400
++++ gnome-device-manager-0.2/shell/gdm-main.c	2007-10-25 18:24:35.000000000 -0400
+@@ -68,6 +68,31 @@ _remove_child (GtkWidget *widget, gpoint
+ }
+ 
+ static void
++tip_style_set (GtkWidget *widget, GtkStyle *previous_style, gpointer data)
++{
++        GtkStyle *style;
++        GdkColor default_border_color = {0, 0xb800, 0xad00, 0x9d00};
++        GdkColor default_fill_color = {0, 0xff00, 0xff00, 0xbf00};
++        GdkColor *fg, *bg;
++
++        style = gtk_rc_get_style_by_paths (gtk_settings_get_default (), 
++                                           "gtk-tooltip", "GtkTooltip", G_TYPE_NONE);
++        if (style) {
++                fg = &style->fg[GTK_STATE_NORMAL];
++                bg = &style->bg[GTK_STATE_NORMAL];
++        }
++        else {
++                fg = &default_border_color;
++                bg = &default_fill_color;
++        }
++    
++        if (!gdk_color_equal (bg, &widget->style->bg[GTK_STATE_NORMAL]))
++                gtk_widget_modify_bg (widget, GTK_STATE_NORMAL, bg);
++        if (!gdk_color_equal (fg, &widget->style->fg[GTK_STATE_NORMAL]))
++                gtk_widget_modify_fg (widget, GTK_STATE_NORMAL, fg);
++}
++
++static void
+ info_page_show_for_device (GdmDevice *device)
+ {
+         GSList *i;
+@@ -120,30 +145,29 @@ info_page_show_for_device (GdmDevice *de
+                 source = *(notifications[n].source);                
+                 if (source != NULL) {
+                         for (i = source; i != NULL; i = g_slist_next (i)) {
+-                                GdkColor border_color = {0, 0xb800, 0xad00, 0x9d00};
+-                                GdkColor fill_color = {0, 0xff00, 0xff00, 0xbf00};
+                                 GdmInfoProviderTip *tip = i->data;
+                                 
+                                 frame = gtk_frame_new (NULL);
+                                 evbox = gtk_event_box_new ();
+-                                gtk_widget_modify_bg (frame, GTK_STATE_NORMAL, &border_color);
+-                                gtk_widget_modify_bg (evbox, GTK_STATE_NORMAL, &fill_color);
++
+                                 gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+-                                
+                                 hbox = gtk_hbox_new (FALSE, 5);
+                                 
+-                                image = gtk_image_new_from_stock (notifications[n].icon_name, GTK_ICON_SIZE_MENU);
++                                image = gtk_image_new_from_stock (notifications[n].icon_name, GTK_ICON_SIZE_BUTTON);
+                                 
+                                 label = gtk_label_new (NULL);
+                                 gtk_label_set_markup (GTK_LABEL (label), tip->text);
+                                 gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_END);
+-                                gtk_label_set_width_chars (GTK_LABEL (label), 50);
+                                 gtk_label_set_selectable (GTK_LABEL (label), TRUE);
+                                 gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+                                 
+                                 gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+-                                gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, TRUE, 0);
++                                gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
+ 
++                                g_signal_connect (evbox, "style_set", 
++                                                  G_CALLBACK (tip_style_set), NULL);
++                                g_signal_connect (label, "style_set", 
++                                                  G_CALLBACK (tip_style_set), NULL);
+                                 if (tip->button_text != NULL) {
+                                         GtkWidget *button;
+                                         button = gtk_button_new_with_label (tip->button_text);

@@ -1,0 +1,11 @@
+diff -p -up gnome-device-manager-0.2/configure.ac.underlinking gnome-device-manager-0.2/configure.ac
+--- gnome-device-manager-0.2/configure.ac.underlinking	2008-05-28 17:36:42.000000000 +0200
++++ gnome-device-manager-0.2/configure.ac	2008-05-28 17:38:38.000000000 +0200
+@@ -36,6 +36,7 @@ PKG_CHECK_MODULES([GNOME_DEVICE_MANAGER]
+   [libgnome-2.0 >= $LIBGNOME_REQUIRED
+    libgnomeui-2.0 >= $LIBGNOMEUI_REQUIRED
+    gtk+-2.0 >= $LIBGTK_REQUIRED
++   dbus-glib-1
+    hal >= $LIBHAL_REQUIRED])
+ 
+ # *************
