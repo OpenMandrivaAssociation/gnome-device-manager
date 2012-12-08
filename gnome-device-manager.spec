@@ -7,7 +7,7 @@
 Summary: Device manager for the GNOME desktop
 Name: gnome-device-manager
 Version: 0.2
-Release: %mkrel 3.%{alphatag}.6
+Release: %mkrel 3.%{alphatag}.7
 License: GPL
 URL: http://
 Group: Graphical desktop/GNOME
@@ -23,6 +23,7 @@ BuildRequires: hal-devel >= 0.5.5
 BuildRequires: gettext
 BuildRequires: scrollkeeper
 BuildRequires: gnome-doc-utils
+BuildRequires: gnome-doc-utils-devel
 BuildRequires: gnome-common
 BuildRequires: libgnomeui2-devel
 BuildRequires: intltool
@@ -53,7 +54,7 @@ Provides: %{name}-devel = %{version}-%{release}
 Headers and static libraries for gnome-device-manager.
 
 %prep
-rm -rf %{buildroot}
+rm -rf $RPM_BUILD_ROOT
 
 %setup -q
 %patch0 -p1 -b .fixbuild
@@ -61,7 +62,7 @@ rm -rf %{buildroot}
 %patch2 -p1 -b .note-theming
 
 #needed by patches 0 & 1
-autoreconf
+autoreconf -fi
 
 %build
 %define _enable_libtoolize 1
@@ -69,15 +70,15 @@ autoreconf
 make
 
 %install
-rm -rf %{buildroot}
+rm -rf $RPM_BUILD_ROOT
 %makeinstall_std
 
-rm -f %{buildroot}%{_libdir}/*.a
+rm -f $RPM_BUILD_ROOT%{_libdir}/*.a
 
 %find_lang %name --with-gnome
 
 %clean
-rm -rf %{buildroot}
+rm -rf $RPM_BUILD_ROOT
 
 %post
 %update_scrollkeeper
@@ -101,7 +102,6 @@ rm -rf %{buildroot}
 %{_bindir}/gnome-device-manager
 %{_datadir}/icons/hicolor/*/apps/*
 %{_datadir}/applications/gnome-device-manager.desktop
-%{_datadir}/omf/gnome-device-manager
 
 %files -n %{lib_name}
 %defattr(-,root,root)
@@ -111,6 +111,52 @@ rm -rf %{buildroot}
 %files -n %{develname}
 %defattr(-,root,root)
 %{_libdir}/libgnome-device-manager.so
-%{_libdir}/libgnome-device-manager.la
 %{_libdir}/pkgconfig/*.pc
 %{_includedir}/gnome-device-manager
+
+
+%changelog
+* Tue May 03 2011 Oden Eriksson <oeriksson@mandriva.com> 0.2-3.20070906.6mdv2011.0
++ Revision: 664865
+- mass rebuild
+
+* Thu Dec 02 2010 Oden Eriksson <oeriksson@mandriva.com> 0.2-3.20070906.5mdv2011.0
++ Revision: 605470
+- rebuild
+
+* Tue Mar 16 2010 Oden Eriksson <oeriksson@mandriva.com> 0.2-3.20070906.4mdv2010.1
++ Revision: 521486
+- rebuilt for 2010.1
+
+* Tue May 19 2009 Christophe Fergeau <cfergeau@mandriva.com> 0.2-3.20070906.3mdv2010.0
++ Revision: 377575
+- run libtoolize in addition to autoreconf
+
+* Sun Nov 09 2008 Oden Eriksson <oeriksson@mandriva.com> 0.2-3.20070906.3mdv2009.1
++ Revision: 301530
+- rebuilt against new libxcb
+
+* Wed Aug 06 2008 Thierry Vignaud <tv@mandriva.org> 0.2-3.20070906.2mdv2009.0
++ Revision: 264556
+- rebuild early 2009.0 package (before pixel changes)
+
+  + Pixel <pixel@mandriva.com>
+    - do not call ldconfig in %%post/%%postun, it is now handled by filetriggers
+
+* Wed May 28 2008 Frederic Crozat <fcrozat@mandriva.com> 0.2-0.20070906.2mdv2009.0
++ Revision: 212654
+- Patch1: fix underlinking
+- Patch2 (Fedora): improve themeing notes / warnings
+
+  + Olivier Blin <oblin@mandriva.com>
+    - restore BuildRoot
+
+* Mon Dec 17 2007 Thierry Vignaud <tv@mandriva.org> 0.2-0.20070906.1mdv2008.1
++ Revision: 125914
+- kill re-definition of %%buildroot on Pixel's request
+
+* Fri Sep 07 2007 Frederic Crozat <fcrozat@mandriva.com> 0.2-0.20070906.1mdv2008.0
++ Revision: 81433
+- Fix buildrequires
+- Import gnome-device-manager
+
