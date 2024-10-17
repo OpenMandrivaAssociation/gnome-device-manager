@@ -9,7 +9,7 @@ Name: gnome-device-manager
 Version: 0.2
 Release: %mkrel 3.%{alphatag}.7
 License: GPL
-URL: http://
+URL: https://
 Group: Graphical desktop/GNOME
 Source0: %{name}-%{version}.tar.bz2
 # (fc) 0.2-0.20070906.1mdv fix error in Makefile.am
